@@ -87,7 +87,7 @@ var mainState = {
         var expData = new Array(2);
 
         function randomActsOfNature() {
-            return Math.random() * (1.3 - (0.6)) + (0.6);
+            return Math.random() * (1.3 - (0.5)) + (0.5);
         }
 
         function roundToTwo(num) {
@@ -151,13 +151,13 @@ var mainState = {
                     triggerWinter();
             } else if (pickRandom === 7) {
                 if (horses > 0) {
-                    consoleMessage = 'You left your fence unlocked and some horses got away';
+                    consoleMessage = 'You left your fence unlocked and\nsome horses got away';
                     horses *= 0.5;
                     horses = horses | 0;
                 } else
                     triggerWinter();
             } else if (pickRandom === 8) {
-                consoleMessage = 'A religous radical from you village stole some money';
+                consoleMessage = 'A religous radical from you village\nstole some money';
                 money -= 100;
             } else if (pickRandom === 9) {
                 if (plows > 0) {
@@ -194,14 +194,14 @@ var mainState = {
                 consoleMessage = 'You found a dead corpse will a full purse.';
                 money += 200;
             } else if (pickRandom === 4) {
-                consoleMessage = 'A good samaritan sees your kids and give you\nsome tools and cow from his heard.';
+                consoleMessage = 'A good samaritan sees your kids and give you\nsome tools and a cow from his\nheard.';
                 tools += 2;
                 cattle++;
             } else if (pickRandom === 5) {
-                consoleMessage = 'A trader caravan left behind a plow.';
-                plow++;
+                consoleMessage = 'A trade caravan left behind a plow.';
+                plows++;
             } else if (pickRandom === 6) {
-                consoleMessage = 'A friendly native give you some seeds.';
+                consoleMessage = 'A friendly native gives you some seeds.';
                 corn *= 1.2;
                 wheat *= 1.2;
                 tomatoes *= 1.2;
@@ -211,7 +211,7 @@ var mainState = {
                 potatoes += 25;
             } else if (pickRandom === 8) {
                 consoleMessage = 'You find a abandoned plow and fix it.';
-                plow++;
+                plows++;
             } else if (pickRandom === 9) {
                 if (horses > 1) {
                     consoleMessage = 'Some horses give birth.';
@@ -265,14 +265,14 @@ var mainState = {
                 potatoes *= 1.2;
             } else if (pickRandom === 7) {
                 if (horses > 0) {
-                    consoleMessage = 'You left your fence unlocked and some horses got away';
+                    consoleMessage = 'You left your fence unlocked and some\nhorses got away';
                     horses *= 0.5;
                     horses = horses | 0;
                 } else
                     triggerWinter();
             } else if (pickRandom === 8) {
                 consoleMessage = 'You find a abandoned plow and fix it.';
-                plow++;
+                plows++;
             } else if (pickRandom === 9) {
                 if (horses > 1) {
                     consoleMessage = 'Some horses give birth.';
@@ -316,10 +316,14 @@ var mainState = {
 
         function runSeason() {
             money -= checkFood();
-            cornYield = roundToTwo(cornYield * (randomActsOfNature() + ((0.005 * slaves) + (0.03 * hands) + (0.002 * tools) + (0.008 * horses) + (0.01 * plows) + (0.02 * cattle))));
-            wheatYield = roundToTwo(wheatYield * (randomActsOfNature() + ((0.01 * slaves) + (0.03 * hands) + (0.002 * tools) + (0.008 * horses) + (0.01 * plows) + (0.02 * cattle))));
-            potatoesYield = roundToTwo(potatoesYield * (randomActsOfNature() + ((0.005 * slaves) + (0.02 * hands) + (0.002 * tools) + (0.008 * horses) + (0.01 * plows) + (0.02 * cattle))));
-            tomatoesYield = roundToTwo(tomatoesYield * (randomActsOfNature() + ((0.005 * slaves) + (0.02 * hands) + (0.002 * tools) + (0.008 * horses) + (0.01 * plows) + (0.02 * cattle))));
+            cornYield = roundToTwo(cornYield * (randomActsOfNature() + ((0.005 * slaves) + (0.03 * hands) + (0.0005 * tools) + (0.006 * horses) + (0.01 * plows) + (0.02 * cattle)-(0.02 * screenYear))));
+            wheatYield = roundToTwo(wheatYield * (randomActsOfNature() + ((0.01 * slaves) + (0.03 * hands) + (0.0005 * tools) + (0.006 * horses) + (0.01 * plows) + (0.02 * cattle)-(0.02 * screenYear))));
+            potatoesYield = roundToTwo(potatoesYield * (randomActsOfNature() + ((0.005 * slaves) + (0.02 * hands) + (0.0005 * tools) + (0.006 * horses) + (0.01 * plows) + (0.02 * cattle)-(0.02 * screenYear))));
+            tomatoesYield = roundToTwo(tomatoesYield * (randomActsOfNature() + ((0.005 * slaves) + (0.02 * hands) + (0.0005 * tools) + (0.006 * horses) + (0.01 * plows) + (0.02 * cattle)-(0.02 * screenYear))));
+            if(cornYield > 2)cornYield = 2;
+            if(wheatYield > 2)wheatYield = 2;
+            if(potatoesYield > 2)potatoesYield = 2;
+            if(tomatoesYield > 2)tomatoesYield = 2;
             Cseason++;
             money -= (hands * 2);
             if (Cseason === 1) {
@@ -485,7 +489,7 @@ var mainState = {
             game.state.start('death');
         }
         if (screenYear === 30) {
-            game.states.start('win');
+            game.state.start('win');
         }
     },
 };
